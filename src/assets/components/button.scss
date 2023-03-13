@@ -1,0 +1,14 @@
+.app-button {
+  border-radius: 12px;
+  border: 1px solid #397AF5;
+  background: #397AF5;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  &.active {
+    background: #EDF2FF;
+  }
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
