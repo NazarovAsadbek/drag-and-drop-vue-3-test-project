@@ -4,6 +4,7 @@
     <app-product-list
         v-model="list"
         :items="list"
+        :draggedIndex="draggedIndex"
         :activePanelIndex="activePanelIndex"
         :activeContextIndex="activeContextIndex"
         :editableCardId="editableCardId"

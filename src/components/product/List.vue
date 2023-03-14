@@ -22,6 +22,7 @@
         @openCloseContext="emit('openCloseContext', $event)"
         @onSelectInContext="emit('onSelectInContext', $event)"
         @editCard="emit('editCard', $event)"
+        :class="{ 'dragging': draggedIndex === index }"
     />
     <!--  emit is a mixin-->
   </div>
@@ -56,6 +57,11 @@ export default {
     },
     editableCardId: {
       type: [Number, String, null],
+      required: true,
+      default: null
+    },
+    draggedIndex: {
+      type: [Number, Object, null],
       required: true,
       default: null
     },
