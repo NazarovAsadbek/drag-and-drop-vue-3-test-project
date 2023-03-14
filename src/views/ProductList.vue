@@ -4,6 +4,7 @@
     <app-product-list
         :items="list"
         :activePanelIndex="activePanelIndex"
+        :activeContextIndex="activeContextIndex"
         @onDragStart="onDragStart"
         @onDragEnter="onDragEnter"
         @onDragStartChild="onDragStartChild"
@@ -11,6 +12,8 @@
         @onDrop="onDrop"
         @onDropChild="onDropChild"
         @openClosePanel="openClosePanel"
+        @openCloseContext="openCloseContextMenu"
+        @onSelectInContext="onSelectInContext"
     />
   </section>
 </template>
@@ -31,7 +34,8 @@ export default {
       draggedChildIndex: null,
       draggingOverIndex: null,
       draggingOverChildIndex: null,
-      activePanelIndex: null
+      activePanelIndex: null,
+      activeContextIndex: null,
     }
   },
   methods: {
@@ -41,6 +45,31 @@ export default {
         return;
       }
       this.activePanelIndex = index;
+    },
+    openCloseContextMenu(index) {
+      if (this.activeContextIndex === index) {
+        this.activeContextIndex = null;
+        return;
+      }
+      this.activeContextIndex = index;
+    },
+    onSelectInContext({index, type}) {
+      this.activeContextIndex = null;
+      if (type === 'delete') {
+        const [parentIndex, childIndex = undefined] = index.toString().split('.');
+        if (childIndex !== undefined) {
+          this.list[parentIndex - 1].children.splice(childIndex, 1);
+        } else {
+          this.list.splice(parentIndex, 1);
+        }
+      } else if (type === 'edit') {
+        // const [parentIndex, childIndex = undefined] = index.toString().split('.');
+        // if (childIndex !== undefined) {
+        //   this.list[parentIndex - 1].children[childIndex].name = 'Edited';
+        // } else {
+        //   this.list[parentIndex].name = 'Edited';
+        // }
+      }
     },
     onDragStart({index}) {
       this.draggedIndex = index;

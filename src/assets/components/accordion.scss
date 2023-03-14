@@ -38,13 +38,14 @@
           font-weight: 500;
           font-size: 12px;
           color: #FFFFFF;
-          vertical-align: super;
+          vertical-align: middle;
         }
       }
     }
 
     &__actions {
       display: flex;
+      align-items: center;
       justify-content: end;
       margin-right: 25px;
     }
@@ -102,6 +103,7 @@
     }
     &__actions {
       display: flex;
+      align-items: center;
       justify-content: end;
       margin-right: 25px;
     }

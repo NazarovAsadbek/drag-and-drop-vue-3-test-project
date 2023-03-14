@@ -5,9 +5,22 @@
   width: 32px;
   height: 32px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.outline {
+    background: #FFFFFF !important;
+  }
+
   &.active {
     background: #EDF2FF;
   }
+
+  &.filled {
+    background: #397AF5 !important;
+  }
+
   &.disabled {
     cursor: not-allowed;
   }

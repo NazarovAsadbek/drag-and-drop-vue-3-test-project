@@ -35,16 +35,22 @@
           @onClick="emit('openClosePanel', index)"
           :is-active="isPanelOpened"
           :isBtnDisabled="isBtnDisabled"
+          class="m-1"
       >
         <img :src="getCurrentPanelImage" alt="top">
       </AppButton>
-      <div @contextmenu.prevent="handleContextMenu">
-        <p>Right</p>
+      <div class="p-0 m-1">
+        <AppButton
+            @onClick="emit('openCloseContext', index)"
+            class="outline"
+            :class="{ 'filled': isContextMenuOpened }"
+        >
+          <img :src="getContextMenuIcon" alt="top">
+        </AppButton>
         <AppDropdownMenu
-            v-if="showContextMenu"
+            v-if="isContextMenuOpened"
             :items="contextMenuItems"
-            :position="contextMenuPosition"
-            @select="handleContextMenuSelect"
+            @select="emit('onSelectInContext', {index, type: $event})"
         />
       </div>
     </div>
@@ -57,28 +63,9 @@ import {defineAsyncComponent} from "vue";
 export default {
   components: {
     AppButton: defineAsyncComponent(() => import('@/components/base/AppButton.vue')),
-    AppDropdownMenu: defineAsyncComponent(() => import('@/components/base/AppDropdownMenu.vue')),
+    AppDropdownMenu: defineAsyncComponent(() => import('@/components/base/AppDropdownMenu.vue'))
   },
-  data() {
-    return {
-      showContextMenu: false,
-      contextMenuItems: [
-        {label: 'Edit', action: 'edit'},
-        {label: 'Delete', action: 'delete'}
-      ],
-      contextMenuPosition: {x: 0, y: 0}
-    }
-  },
-  methods: {
-    handleContextMenu(event) {
-      this.showContextMenu = !this.showContextMenu;
-      this.contextMenuPosition = { x: event.clientX, y: event.clientY };
-    },
-    handleContextMenuSelect(item) {
-      console.log(`Selected item: ${item.action}`);
-      this.showContextMenu = false;
-    }
-  },
+  emits: ['openClosePanel', 'openCloseContext', 'onSelectInContext'],
   props: {
     index: {
       type: Number,
@@ -103,11 +90,21 @@ export default {
       required: true,
       default: false
     },
+    isContextMenuOpened: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
     isBtnDisabled: {
       type: Boolean,
       required: true,
       default: false
-    }
+    },
+    contextMenuItems: {
+      type: Array,
+      required: true,
+      default: () => []
+    },
   },
   computed: {
     getCurrentOrderNumber() {
@@ -122,7 +119,10 @@ export default {
     },
     getCurrentPanelImage() {
       return this.isPanelOpened ? '/icons/chevron-top.svg' : '/icons/chevron-down.svg'
+    },
+    getContextMenuIcon() {
+      return this.isContextMenuOpened ? '/icons/ellipsis-white.svg' : '/icons/ellipsis.svg'
     }
-  }
+  },
 }
 </script>
