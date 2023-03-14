@@ -66,7 +66,7 @@ export default {
       if (this.editableCardId === index) {
         this.editableCardId = null;
         if (childIndex !== undefined) {
-          this.list[parentIndex].children[childIndex].name = new ProductList()[parentIndex].children[+childIndex].name;
+          this.list[parentIndex - 1].children[childIndex].name = new ProductList()[parentIndex - 1].children[+childIndex].name;
         } else {
           this.list[parentIndex].name = new ProductList()[parentIndex].name;
         }
