@@ -85,6 +85,8 @@ export default {
         this.activeContextIndex = null;
       } else if (type === 'edit') {
         this.editCard(index, +parentIndex, childIndex);
+      } else if (type === 'saveEdit') {
+        this.editableCardId = null;
       }
     },
     onDragStart({index}) {
