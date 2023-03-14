@@ -8,7 +8,14 @@
     <!--  Accordion name  -->
     <div>
       <p>Название</p>
-      <p class="fw-500">
+      <app-input
+          v-show="isCardEditable"
+          v-model="model[index].children[childIndex].name"
+          :value="model"
+          type="child"
+          :index="index" :childIndex="childIndex"
+      />
+      <p v-show="!isCardEditable" class="fw-500">
         <img src="/icons/file.svg" alt="folder">
         {{ name }}
       </p>
@@ -43,10 +50,19 @@ import {defineAsyncComponent} from "vue";
 export default {
   components: {
     AppButton: defineAsyncComponent(() => import('@/components/base/AppButton.vue')),
-    AppDropdownMenu: defineAsyncComponent(() => import('@/components/base/AppDropdownMenu.vue'))
+    AppDropdownMenu: defineAsyncComponent(() => import('@/components/base/AppDropdownMenu.vue')),
+    AppInput: defineAsyncComponent(() => import('@/components/base/AppInput.vue'))
   },
-  emits: ['openCloseContext', 'onSelectInContext'],
+  emits: ['openCloseContext', 'onSelectInContext', 'input'],
+  model: {
+    prop: 'name',
+    event: 'input'
+  },
   props: {
+    items: {
+      type: Array,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -65,6 +81,11 @@ export default {
       required: true,
       default: false
     },
+    isCardEditable: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
     contextMenuItems: {
       type: Array,
       required: true,
@@ -72,6 +93,14 @@ export default {
     },
   },
   computed: {
+    model: {
+      get() {
+        return this.items;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
+    },
     consistentIndex() {
       const index = this.index + 1;
       return `${index}.${this.childIndex}`;

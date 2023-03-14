@@ -1,6 +1,8 @@
 <template>
   <div class="accordion">
     <expansion-header
+        v-model="model"
+        :items="items"
         :name="name"
         :children="children"
         :children-length="getChildrenLength"
@@ -8,15 +10,20 @@
         :isPanelOpened="isPanelOpened"
         :isBtnDisabled="isBtnDisabled"
         :isContextMenuOpened="isContextMenuOpened('', 'parent')"
+        :isCardEditable="isCardEditable('', 'parent')"
         :contextMenuItems="getContextMenuItems"
         @openClosePanel="emit('openClosePanel', $event)"
         @openCloseContext="emit('openCloseContext', $event)"
         @onSelectInContext="emit('onSelectInContext', $event)"
+        @editCard="emit('editCard', $event)"
     />
     <expansion-panel
         v-show="isPanelOpened"
-        v-for="(name, childIndex) in children" :key="childIndex"
+        v-model="model"
+        v-for="({id, name}, childIndex) in children" :key="id"
         :isContextMenuOpened="isContextMenuOpened(childIndex, 'child')"
+        :isCardEditable="isCardEditable(childIndex, 'child')"
+        :items="items"
         :index="index" :childIndex="childIndex"
         :name="name"
         :contextMenuItems="getContextMenuItems"
@@ -27,7 +34,9 @@
         @dragover.stop.prevent
         @openCloseContext="emit('openCloseContext', $event)"
         @onSelectInContext="emit('onSelectInContext', $event)"
+        @editCard="emit('editCard', $event)"
     />
+    <!--  emit is a mixin-->
   </div>
 </template>
 
@@ -40,8 +49,16 @@ export default {
     ExpansionHeader: defineAsyncComponent(() => import('@/components/base/AppAccordion/Accordion.header.vue')),
     ExpansionPanel: defineAsyncComponent(() => import('@/components/base/AppAccordion/Accordion.panel.vue')),
   },
-  emits: ['onDragStartChild', 'onDragEnterChild', 'onDropChild', 'openClosePanel', 'openCloseContext', 'onSelectInContext'],
+  emits: ['onDragStartChild', 'onDragEnterChild', 'onDropChild', 'openClosePanel', 'openCloseContext', 'onSelectInContext', 'editCard', 'input'],
+  model: {
+    prop: 'value',
+    event: 'input'
+  },
   props: {
+    items: {
+      type: Array,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -72,8 +89,21 @@ export default {
       required: true,
       default: null
     },
+    editableCardId: {
+      type: [Number, String, null],
+      required: true,
+      default: null
+    },
   },
   computed: {
+    model: {
+      get() {
+        return this.items;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
+    },
     getChildrenLength() {
       return this.children.length;
     },
@@ -87,6 +117,12 @@ export default {
         return this.activeContextIndex === this.index;
       }
       return this.activeContextIndex === `${this.index + 1}.${childIndex}`;
+    },
+    isCardEditable(childIndex, type = 'parent') {
+      if (type === 'parent') {
+        return this.editableCardId === this.index;
+      }
+      return this.editableCardId === `${this.index + 1}.${childIndex}`;
     },
   }
 }

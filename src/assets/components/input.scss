@@ -1,0 +1,18 @@
+$border-color: #397AF5;
+
+@mixin input-styles {
+  border: 1px solid $border-color;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  color: #333;
+
+  &:focus {
+    outline: none;
+    border-color: darken($border-color, 10%);
+  }
+}
+
+input {
+  @include input-styles;
+}

@@ -1,12 +1,15 @@
 <template>
   <div class="wrapper-accordion-block" @dragover.prevent @drop.stop="emit('onDrop')">
     <app-accordion
+        v-model="model"
         v-for="({id, name, children}, index) in items" :key="id"
+        :items="items"
         :name="name"
         :children="children"
         :index="index"
         :activePanelIndex="activePanelIndex"
         :activeContextIndex="activeContextIndex"
+        :editableCardId="editableCardId"
         :isPanelOpened="isPanelOpened(index)"
         :isBtnDisabled="isBtnDisabled(children)"
         :draggable="true"
@@ -18,7 +21,9 @@
         @openClosePanel="emit('openClosePanel', $event)"
         @openCloseContext="emit('openCloseContext', $event)"
         @onSelectInContext="emit('onSelectInContext', $event)"
+        @editCard="emit('editCard', $event)"
     />
+    <!--  emit is a mixin-->
   </div>
 </template>
 
@@ -29,7 +34,11 @@ export default {
   components: {
     AppAccordion: defineAsyncComponent(() => import('@/components/base/AppAccordion/index.vue')),
   },
-  emits: ['onDrop', 'onDropChild', 'onDragStart', 'onDragEnter', 'onDragStartChild', 'onDragEnterChild', 'openClosePanel', 'openCloseContext', 'onSelectInContext'],
+  emits: ['onDrop', 'onDropChild', 'onDragStart', 'onDragEnter', 'onDragStartChild', 'onDragEnterChild', 'openClosePanel', 'openCloseContext', 'onSelectInContext', 'editCard', 'input'],
+  model: {
+    prop: 'items',
+    event: 'input'
+  },
   props: {
     items: {
       type: Array,
@@ -45,6 +54,21 @@ export default {
       required: true,
       default: null
     },
+    editableCardId: {
+      type: [Number, String, null],
+      required: true,
+      default: null
+    },
+  },
+  computed: {
+    model: {
+      get() {
+        return this.items;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
+    }
   },
   methods: {
     isPanelOpened(index) {

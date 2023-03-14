@@ -8,7 +8,14 @@
     <!--  Accordion name  -->
     <div>
       <p>Название</p>
-      <p class="text-upper fw-700 ">
+      <app-input
+          v-show="isCardEditable"
+          v-model="model[index].name"
+          :value="model"
+          type="parent"
+          :index="index"
+      />
+      <p v-show="!isCardEditable" class="text-upper fw-700">
         <img src="/icons/folder.svg" alt="folder">
         {{ name }}
       </p>
@@ -63,10 +70,19 @@ import {defineAsyncComponent} from "vue";
 export default {
   components: {
     AppButton: defineAsyncComponent(() => import('@/components/base/AppButton.vue')),
-    AppDropdownMenu: defineAsyncComponent(() => import('@/components/base/AppDropdownMenu.vue'))
+    AppDropdownMenu: defineAsyncComponent(() => import('@/components/base/AppDropdownMenu.vue')),
+    AppInput: defineAsyncComponent(() => import('@/components/base/AppInput.vue'))
   },
   emits: ['openClosePanel', 'openCloseContext', 'onSelectInContext'],
+  model: {
+    prop: 'name',
+    event: 'input'
+  },
   props: {
+    items: {
+      type: Array,
+      required: true,
+    },
     index: {
       type: Number,
       required: true
@@ -95,6 +111,11 @@ export default {
       required: true,
       default: false
     },
+    isCardEditable: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
     isBtnDisabled: {
       type: Boolean,
       required: true,
@@ -107,6 +128,14 @@ export default {
     },
   },
   computed: {
+    model: {
+      get() {
+        return this.items;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
+    },
     getCurrentOrderNumber() {
       const index = this.index + 1;
       return index;
@@ -115,14 +144,14 @@ export default {
       if (this.children.length === 0) {
         return "-"
       }
-      return this.children.toString();
+      return this.children.map(i => i.name).join('/');
     },
     getCurrentPanelImage() {
       return this.isPanelOpened ? '/icons/chevron-top.svg' : '/icons/chevron-down.svg'
     },
     getContextMenuIcon() {
       return this.isContextMenuOpened ? '/icons/ellipsis-white.svg' : '/icons/ellipsis.svg'
-    }
+    },
   },
 }
 </script>

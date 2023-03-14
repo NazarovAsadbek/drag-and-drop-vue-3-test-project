@@ -2,9 +2,11 @@
   <section class="wrapper">
     <app-product-header :find-products="findProducts"/>
     <app-product-list
+        v-model="list"
         :items="list"
         :activePanelIndex="activePanelIndex"
         :activeContextIndex="activeContextIndex"
+        :editableCardId="editableCardId"
         @onDragStart="onDragStart"
         @onDragEnter="onDragEnter"
         @onDragStartChild="onDragStartChild"
@@ -14,6 +16,7 @@
         @openClosePanel="openClosePanel"
         @openCloseContext="openCloseContextMenu"
         @onSelectInContext="onSelectInContext"
+        @editCard="editCard"
     />
   </section>
 </template>
@@ -36,6 +39,12 @@ export default {
       draggingOverChildIndex: null,
       activePanelIndex: null,
       activeContextIndex: null,
+      editableCardId: null,
+    }
+  },
+  computed: {
+    findProducts() {
+      return this.list.length
     }
   },
   methods: {
@@ -53,6 +62,13 @@ export default {
       }
       this.activeContextIndex = index;
     },
+    editCard(index) {
+      if (this.editableCardId === index) {
+        this.editableCardId = null;
+        return;
+      }
+      this.editableCardId = index;
+    },
     onSelectInContext({index, type}) {
       this.activeContextIndex = null;
       if (type === 'delete') {
@@ -63,12 +79,7 @@ export default {
           this.list.splice(parentIndex, 1);
         }
       } else if (type === 'edit') {
-        // const [parentIndex, childIndex = undefined] = index.toString().split('.');
-        // if (childIndex !== undefined) {
-        //   this.list[parentIndex - 1].children[childIndex].name = 'Edited';
-        // } else {
-        //   this.list[parentIndex].name = 'Edited';
-        // }
+        this.editCard(index);
       }
     },
     onDragStart({index}) {
@@ -104,10 +115,5 @@ export default {
       this.draggingOverIndex = null;
     }
   },
-  computed: {
-    findProducts() {
-      return this.list.length
-    }
-  }
 };
 </script>

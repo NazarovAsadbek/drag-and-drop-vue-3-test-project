@@ -4,30 +4,30 @@ export function ProductList() {
             id: crypto.randomUUID(),
             name: 'Mastercard',
             children: [
-                'Mastercard (Standart)',
-                'Mastercard (World)',
-                'Mastercard (Platinum)',
-                'Mastercard (Gold)',
-                'Master card',
-                'Mastercard (Standart)',
-                'Mastercard (World)',
-                'Mastercard (Platinum)',
-                'Mastercard (Gold)',
-                'Master card',
-                'Mastercard (Platinum)',
-                'Mastercard (Gold)',
+                {id: crypto.randomUUID(), name: 'Mastercard (Standart)'},
+                {id: crypto.randomUUID(), name: 'Mastercard (World)'},
+                {id: crypto.randomUUID(), name: 'Mastercard (Platinum)'},
+                {id: crypto.randomUUID(), name: 'Mastercard (Gold)'},
+                {id: crypto.randomUUID(), name: 'Master card'},
+                {id: crypto.randomUUID(), name: 'Mastercard (Standart)'},
+                {id: crypto.randomUUID(), name: 'Mastercard (World)'},
+                {id: crypto.randomUUID(), name: 'Mastercard (Platinum)'},
+                {id: crypto.randomUUID(), name: 'Mastercard (Gold)'},
+                {id: crypto.randomUUID(), name: 'Master card'},
+                {id: crypto.randomUUID(), name: 'Mastercard (Platinum)'},
+                {id: crypto.randomUUID(), name: 'Mastercard (Gold)'}
             ]
         },
         {
             id: crypto.randomUUID(),
             name: 'вклады',
             children: [
-                'Максимал фойда (Нац. валюта)',
-                'On-line (Нац. валюта)',
-                'Аванс (Нац. валюта)',
-                'Максимал фойда',
-                'On-line (Ин. валюта)',
-                'Аванс (Ин. валюта)',
+                {id: crypto.randomUUID(), name: 'Максимал фойда (Нац. валюта)'},
+                {id: crypto.randomUUID(), name: 'On-line (Нац. валюта)'},
+                {id: crypto.randomUUID(), name: 'Аванс (Нац. валюта)'},
+                {id: crypto.randomUUID(), name: 'Максимал фойда'},
+                {id: crypto.randomUUID(), name: 'On-line (Ин. валюта)'},
+                {id: crypto.randomUUID(), name: 'Аванс (Ин. валюта)'}
             ]
         },
         {
