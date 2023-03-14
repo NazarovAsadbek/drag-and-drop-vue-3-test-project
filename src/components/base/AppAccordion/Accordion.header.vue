@@ -57,6 +57,7 @@
         <AppDropdownMenu
             v-if="isContextMenuOpened"
             :items="contextMenuItems"
+            :isCardEditable="isCardEditable"
             @select="emit('onSelectInContext', {index, type: $event})"
         />
       </div>

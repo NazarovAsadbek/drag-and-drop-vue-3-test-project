@@ -62,24 +62,29 @@ export default {
       }
       this.activeContextIndex = index;
     },
-    editCard(index) {
+    editCard(index, parentIndex, childIndex) {
       if (this.editableCardId === index) {
         this.editableCardId = null;
+        if (childIndex !== undefined) {
+          this.list[parentIndex].children[childIndex].name = new ProductList()[parentIndex].children[+childIndex].name;
+        } else {
+          this.list[parentIndex].name = new ProductList()[parentIndex].name;
+        }
         return;
       }
       this.editableCardId = index;
     },
     onSelectInContext({index, type}) {
-      this.activeContextIndex = null;
+      const [parentIndex, childIndex = undefined] = index.toString().split('.');
       if (type === 'delete') {
-        const [parentIndex, childIndex = undefined] = index.toString().split('.');
         if (childIndex !== undefined) {
-          this.list[parentIndex - 1].children.splice(childIndex, 1);
+          this.list[+parentIndex - 1].children.splice(childIndex, 1);
         } else {
-          this.list.splice(parentIndex, 1);
+          this.list.splice(+parentIndex, 1);
         }
+        this.activeContextIndex = null;
       } else if (type === 'edit') {
-        this.editCard(index);
+        this.editCard(index, +parentIndex, childIndex);
       }
     },
     onDragStart({index}) {

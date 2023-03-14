@@ -11,7 +11,7 @@
           @click="emit('select', action)"
       >
         <img :src="icon" alt="">
-        <span>{{ label }}</span>
+        <span>{{ action === 'edit' ? computedLabel : label }}</span>
       </div>
     </div>
   </button>
@@ -24,6 +24,15 @@ export default {
     items: {
       type: Array,
       required: true
+    },
+    isCardEditable: {
+      type: Boolean,
+      default: false
+    },
+  },
+  computed: {
+    computedLabel() {
+      return this.isCardEditable ? 'Отменить редактирование' : 'Редактировать';
     }
   }
 };
