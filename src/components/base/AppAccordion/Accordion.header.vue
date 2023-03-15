@@ -6,7 +6,7 @@
       <p class="text-center">{{ getCurrentOrderNumber }}</p>
     </div>
     <!--  Accordion name  -->
-    <div>
+    <div class="accordion-header__name">
       <p>Название</p>
       <app-input
           v-show="isCardEditable"
@@ -21,12 +21,12 @@
       </p>
     </div>
     <!--  Accordion order number  -->
-    <div>
+    <div class="accordion-header__queue">
       <p>Очередность</p>
       <p>{{ getCurrentOrderNumber }}</p>
     </div>
     <!--  Accordion Subcategories  -->
-    <div class="overflow-hidden">
+    <div class="accordion-header__subfolders overflow-hidden">
       <p>Подкатегории</p>
       <p class="text-truncate">{{ getChildrenString }}</p>
     </div>

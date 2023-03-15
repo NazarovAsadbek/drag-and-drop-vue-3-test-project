@@ -6,7 +6,7 @@
       <p class="text-center fw-500">{{ consistentIndex }}</p>
     </div>
     <!--  Accordion name  -->
-    <div>
+    <div class="accordion-panel__name">
       <p>Название</p>
       <app-input
           v-show="isCardEditable"
@@ -21,7 +21,7 @@
       </p>
     </div>
     <!--  Accordion order number  -->
-    <div>
+    <div class="accordion-panel__queue">
       <p>Очередность</p>
       <p class="fw-500">{{ childIndex + 1 }}</p>
     </div>

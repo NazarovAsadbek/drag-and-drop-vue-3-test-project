@@ -1,10 +1,10 @@
 <template>
-  <button
+  <div
       class="context-menu"
       @click="$emit('onClick')"
   >
     <div class="context-menu-list">
-      <div
+      <button
           class="context-menu-list__item"
           v-for="({id, label, icon, action}) in list"
           :key="id"
@@ -12,9 +12,9 @@
       >
         <img :src="icon" alt="">
         <span>{{ action === 'edit' ? computedLabel : label }}</span>
-      </div>
+      </button>
     </div>
-  </button>
+  </div>
 </template>
 
 <script>
