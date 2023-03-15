@@ -1,7 +1,7 @@
 import {describe, it, expect} from 'vitest'
 import {mount} from '@vue/test-utils'
 
-import Accordion from '../../../base/AppAccordion'
+import Accordion from '../../../base/AppAccordion/index.vue'
 import AccordionHeader from '../../../base/AppAccordion/Accordion.header.vue'
 import AccordionPanel from '../../../base/AppAccordion/Accordion.panel.vue'
 import {ProductList} from '@/data/product/productList'
