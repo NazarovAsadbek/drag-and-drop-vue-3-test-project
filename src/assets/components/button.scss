@@ -1,7 +1,9 @@
+@use "../utils/colors-variables" as *;
+
 .app-button {
   border-radius: 12px;
-  border: 1px solid #397AF5;
-  background: #397AF5;
+  border: 1px solid $color_primary;
+  background: $color_primary;
   width: 32px;
   height: 32px;
   cursor: pointer;
@@ -10,15 +12,15 @@
   justify-content: center;
 
   &.outline {
-    background: #FFFFFF !important;
+    background: $color_white !important;
   }
 
   &.active {
-    background: #EDF2FF;
+    background: $color_senary;
   }
 
   &.filled {
-    background: #397AF5 !important;
+    background: $color_primary !important;
   }
 
   &.disabled {

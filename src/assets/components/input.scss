@@ -1,16 +1,16 @@
-$border-color: #397AF5;
+@use "../utils/colors-variables" as *;
 
 @mixin input-styles {
-  border: 1px solid $border-color;
+  border: 1px solid $color_primary;
   padding: 10px;
   font-size: 16px;
   border-radius: 4px;
-  color: #333;
+  color: $color_grey_darken-3;
   max-width: 80%;
 
   &:focus {
     outline: none;
-    border-color: darken($border-color, 10%);
+    border-color: darken($color_primary, 10%);
   }
 }
 

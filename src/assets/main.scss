@@ -1,3 +1,4 @@
+@use "utils/colors-variables" as *;
 @import './base.scss';
 @import "utils/index.scss";
 @import "components/inedx.scss";
@@ -19,11 +20,11 @@
     &__text {
       font-size: 28px;
       font-weight: 500;
-      color: #000000;
+      color: $color_black;
     }
 
     &__chip {
-      background: #FFFFFF;
+      background: $color_white;
       border-radius: 14px;
       padding: 4px 10px;
 
@@ -31,7 +32,7 @@
         font-weight: 500;
         font-size: 12px;
         letter-spacing: 0.005em;
-        color: #397AF5;
+        color: $color_primary;
       }
     }
   }
