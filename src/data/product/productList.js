@@ -1,3 +1,6 @@
+// The id was taken from the web api method of the crypto.randomUUID(),
+// but was removed due to the fact that it is not supported by node.js versions 16 and below
+
 export function ProductList() {
     return [
         {
