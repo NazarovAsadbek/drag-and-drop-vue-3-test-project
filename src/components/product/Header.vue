@@ -2,7 +2,7 @@
   <div class="wrapper-heading">
     <h1 class="wrapper-heading__text">Список тем обращения и продуктов</h1>
     <div class="wrapper-heading__chip">
-      <span>Найдено: {{ findProducts }}</span>
+      <span>Найдено: {{ productsLength }}</span>
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@
 export default {
   functional: true,
   props: {
-    findProducts: {
+    productsLength: {
       type: Number,
       required: true,
       default: 0

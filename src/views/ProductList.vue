@@ -1,9 +1,9 @@
 <template>
   <section class="wrapper">
-    <app-product-header :find-products="findProducts"/>
+    <app-product-header :products-length="productsLength"/>
     <app-product-list
-        v-model="list"
-        :items="list"
+        v-model="productList"
+        :items="productList"
         :draggedIndex="draggedIndex"
         :activePanelIndex="activePanelIndex"
         :activeContextIndex="activeContextIndex"
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      list: new ProductList(),
+      productList: new ProductList(),
       draggedIndex: null,
       draggedChildIndex: null,
       draggingOverIndex: null,
@@ -44,8 +44,8 @@ export default {
     }
   },
   computed: {
-    findProducts() {
-      return this.list.length
+    productsLength() {
+      return this.productList.length
     }
   },
   methods: {
@@ -67,9 +67,9 @@ export default {
       if (this.editableCardId === index) {
         this.editableCardId = null;
         if (childIndex !== undefined) {
-          this.list[parentIndex - 1].children[childIndex].name = new ProductList()[parentIndex - 1].children[+childIndex].name;
+          this.productList[parentIndex - 1].children[childIndex].name = new ProductList()[parentIndex - 1].children[+childIndex].name;
         } else {
-          this.list[parentIndex].name = new ProductList()[parentIndex].name;
+          this.productList[parentIndex].name = new ProductList()[parentIndex].name;
         }
         return;
       }
@@ -79,9 +79,9 @@ export default {
       const [parentIndex, childIndex = undefined] = index.toString().split('.');
       if (type === 'delete') {
         if (childIndex !== undefined) {
-          this.list[+parentIndex - 1].children.splice(childIndex, 1);
+          this.productList[+parentIndex - 1].children.splice(childIndex, 1);
         } else {
-          this.list.splice(+parentIndex, 1);
+          this.productList.splice(+parentIndex, 1);
         }
         this.activeContextIndex = null;
       } else if (type === 'edit') {
@@ -106,15 +106,15 @@ export default {
     },
     onDrop() {
       if (this.draggedIndex !== null && this.draggingOverIndex !== null) {
-        const [removed] = this.list.splice(this.draggedIndex, 1);
-        this.list.splice(this.draggingOverIndex, 0, removed);
+        const [removed] = this.productList.splice(this.draggedIndex, 1);
+        this.productList.splice(this.draggingOverIndex, 0, removed);
       }
       this.clearDrag()
     },
     onDropChild() {
       if (this.draggedIndex !== null && this.draggingOverIndex !== null) {
-        const [removed] = this.list[this.draggedIndex].children.splice(this.draggedChildIndex, 1);
-        this.list[this.draggingOverIndex].children.splice(this.draggingOverChildIndex, 0, removed);
+        const [removed] = this.productList[this.draggedIndex].children.splice(this.draggedChildIndex, 1);
+        this.productList[this.draggingOverIndex].children.splice(this.draggingOverChildIndex, 0, removed);
       }
       this.clearDrag()
     },
