@@ -8,7 +8,7 @@
           class="context-menu-list__item"
           v-for="({id, label, icon, action}) in list"
           :key="id"
-          @click="emit('select', action)"
+          @click="$emit('select', action)"
       >
         <img :src="icon" alt="">
         <span>{{ action === 'edit' ? computedLabel : label }}</span>
@@ -21,7 +21,7 @@
 import {MenuContext} from "@/data/product/menu-context";
 
 export default {
-  name: 'ContextMenu',
+  name: 'AppDropdownMenu',
   props: {
     items: {
       type: Array,
@@ -37,7 +37,7 @@ export default {
       let arr = JSON.parse(JSON.stringify(this.items));
       if (this.isCardEditable) {
         arr.push({
-          id: crypto.randomUUID(),
+          id: '5f6f0ebd-ba88-4c93-8b5c-f69ee11057e6',
           label: 'Завершить редактирование',
           icon: '/icons/edit.svg',
           action: 'saveEdit'

@@ -1,6 +1,6 @@
 <template>
   <div class="accordion">
-    <expansion-header
+    <accordion-header
         v-model="model"
         :items="items"
         :name="name"
@@ -17,7 +17,7 @@
         @onSelectInContext="emit('onSelectInContext', $event)"
         @editCard="emit('editCard', $event)"
     />
-    <expansion-panel
+    <accordion-panel
         v-show="isPanelOpened"
         v-model="model"
         v-for="({id, name}, childIndex) in children" :key="id"
@@ -46,8 +46,8 @@ import {MenuContext} from "@/data/product/menu-context";
 
 export default {
   components: {
-    ExpansionHeader: defineAsyncComponent(() => import('@/components/base/AppAccordion/Accordion.header.vue')),
-    ExpansionPanel: defineAsyncComponent(() => import('@/components/base/AppAccordion/Accordion.panel.vue')),
+    AccordionHeader: defineAsyncComponent(() => import('@/components/base/AppAccordion/Accordion.header.vue')),
+    AccordionPanel: defineAsyncComponent(() => import('@/components/base/AppAccordion/Accordion.panel.vue')),
   },
   emits: ['onDragStartChild', 'onDragEnterChild', 'onDropChild', 'openClosePanel', 'openCloseContext', 'onSelectInContext', 'editCard', 'input'],
   model: {
